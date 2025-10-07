@@ -56,7 +56,6 @@ export class SoundManager {
 
     // Convert 0-100. to 0-1
     audio.volume = volume / 100;
-    console.log(`Volume for ${soundId}: ${volume}`);
     return true;
   }
 }
