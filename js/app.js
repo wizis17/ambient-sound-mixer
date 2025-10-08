@@ -157,6 +157,13 @@ class AmbientMixer {
         }
       });
     }
+
+    // Theme toggle
+    if (this.ui.themeToggle) {
+      this.ui.themeToggle.addEventListener('click', () => {
+        this.ui.toggleTheme();
+      });
+    }
   }
 
   // Load all sound files
