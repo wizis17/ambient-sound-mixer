@@ -2,6 +2,10 @@
 
 Create your perfect atmosphere with this beautiful and intuitive ambient sound mixer. Mix and match various nature sounds, white noise, and ambient audio to enhance focus, relaxation, or sleep.
 
+This is part of my [Modern JS From The Beginning 2.0 course(https://www.traversymedia.com/modern-javascript-2-0). So no pull requests will be accepted. The code has to match the course.
+
+The theme (HTML/CSS/Audio Only) is in <a href="https://github.com/bradtraversy/ambient-sound-mixer/tree/main/resources/ambient-sound-mixer-theme">/resources/ambient-sound-mixer-theme</a>
+
 ![Ambient Sound Mixer Screenshot](screen.png)
 
 ## ✨ Features
