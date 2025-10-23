@@ -148,12 +148,74 @@ class AmbientMixer {
     const timerSelect = document.getElementById('timerSelect');
     if (timerSelect) {
       timerSelect.addEventListener('change', (e) => {
-        const minutes = parseInt(e.target.value);
-        if (minutes > 0) {
-          this.timer.start(minutes);
-          console.log(`Timer started for ${minutes} minutes`);
+        const value = e.target.value;
+        
+        if (value === 'custom') {
+          // Show custom timer modal
+          this.showCustomTimerModal();
+          // Reset dropdown to 0
+          e.target.value = '0';
         } else {
-          this.timer.stop();
+          const minutes = parseInt(value);
+          if (minutes > 0) {
+            this.timer.start(minutes);
+            console.log(`Timer started for ${minutes} minutes`);
+          } else {
+            this.timer.stop();
+          }
+        }
+      });
+    }
+
+    // Custom timer modal handlers
+    const confirmCustomTimer = document.getElementById('confirmCustomTimer');
+    if (confirmCustomTimer) {
+      confirmCustomTimer.addEventListener('click', () => {
+        this.setCustomTimer();
+      });
+    }
+
+    const cancelCustomTimer = document.getElementById('cancelCustomTimer');
+    if (cancelCustomTimer) {
+      cancelCustomTimer.addEventListener('click', () => {
+        this.hideCustomTimerModal();
+      });
+    }
+
+    // Close custom timer modal on backdrop click
+    const customTimerModal = document.getElementById('customTimerModal');
+    if (customTimerModal) {
+      customTimerModal.addEventListener('click', (e) => {
+        if (e.target === customTimerModal) {
+          this.hideCustomTimerModal();
+        }
+      });
+    }
+
+    // Allow Enter key to submit custom timer
+    const customTimerInput = document.getElementById('customTimerInput');
+    if (customTimerInput) {
+      customTimerInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          this.setCustomTimer();
+        }
+      });
+    }
+
+    // Timer end modal close button
+    const closeTimerEnd = document.getElementById('closeTimerEnd');
+    if (closeTimerEnd) {
+      closeTimerEnd.addEventListener('click', () => {
+        this.hideTimerEndModal();
+      });
+    }
+
+    // Close timer end modal on backdrop click
+    const timerEndModal = document.getElementById('timerEndModal');
+    if (timerEndModal) {
+      timerEndModal.addEventListener('click', (e) => {
+        if (e.target === timerEndModal) {
+          this.hideTimerEndModal();
         }
       });
     }
@@ -474,6 +536,9 @@ class AmbientMixer {
 
   //Timer complete callback
   onTimerComplete() {
+    // Play notification sound
+    this.playNotificationSound();
+
     // Stop all sounds
     this.soundManager.pauseAll();
     this.ui.updateMainPlayButton(false);
@@ -494,6 +559,114 @@ class AmbientMixer {
       this.ui.timerDisplay.textContent = '';
       this.ui.timerDisplay.classList.add('hidden');
     }
+
+    // Show timer end notification modal
+    this.showTimerEndModal();
+  }
+
+  // Play notification sound using Web Audio API
+  playNotificationSound() {
+    try {
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      
+      // Create a pleasant notification sound (three beeps)
+      const playBeep = (frequency, startTime, duration) => {
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.frequency.value = frequency;
+        oscillator.type = 'sine';
+        
+        // Envelope for smooth sound
+        gainNode.gain.setValueAtTime(0, startTime);
+        gainNode.gain.linearRampToValueAtTime(0.3, startTime + 0.01);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + duration);
+        
+        oscillator.start(startTime);
+        oscillator.stop(startTime + duration);
+      };
+
+      // Play three pleasant beeps
+      const now = audioContext.currentTime;
+      playBeep(800, now, 0.15);           // First beep
+      playBeep(1000, now + 0.2, 0.15);    // Second beep (higher)
+      playBeep(1200, now + 0.4, 0.25);    // Third beep (highest, longer)
+
+    } catch (error) {
+      console.warn('Could not play notification sound:', error);
+    }
+  }
+
+  // Show timer end notification modal
+  showTimerEndModal() {
+    const modal = document.getElementById('timerEndModal');
+    if (modal) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+  }
+
+  // Hide timer end notification modal
+  hideTimerEndModal() {
+    const modal = document.getElementById('timerEndModal');
+    if (modal) {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+  }
+
+  // Show custom timer modal
+  showCustomTimerModal() {
+    const modal = document.getElementById('customTimerModal');
+    if (modal) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      
+      // Focus on input
+      const input = document.getElementById('customTimerInput');
+      if (input) {
+        input.value = '';
+        setTimeout(() => input.focus(), 100);
+      }
+    }
+  }
+
+  // Hide custom timer modal
+  hideCustomTimerModal() {
+    const modal = document.getElementById('customTimerModal');
+    if (modal) {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      
+      // Clear input
+      const input = document.getElementById('customTimerInput');
+      if (input) {
+        input.value = '';
+      }
+    }
+  }
+
+  // Set custom timer
+  setCustomTimer() {
+    const input = document.getElementById('customTimerInput');
+    if (!input) return;
+
+    const minutes = parseInt(input.value);
+
+    if (isNaN(minutes) || minutes < 1 || minutes > 999) {
+      alert('Please enter a valid time between 1 and 999 minutes');
+      return;
+    }
+
+    // Start the timer
+    this.timer.start(minutes);
+    console.log(`Custom timer started for ${minutes} minutes`);
+
+    // Hide the modal
+    this.hideCustomTimerModal();
   }
 }
 

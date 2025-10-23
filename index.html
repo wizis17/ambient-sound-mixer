@@ -5,8 +5,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ambient Sound Mixer - Create Your Perfect Atmosphere</title>
 
-    <!-- Tailwind CSS CDN -->
+    <!-- Tailwind CSS CDN with Custom Configuration -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'primary': {
+                50: '#eff6ff',
+                100: '#dbeafe',
+                200: '#bfdbfe',
+                300: '#93c5fd',
+                400: '#60a5fa',
+                500: '#3b82f6',
+                600: '#2563eb',
+                700: '#1d4ed8',
+                800: '#1e40af',
+                900: '#1e3a8a',
+              },
+              'accent': {
+                50: '#f0f9ff',
+                100: '#e0f2fe',
+                200: '#bae6fd',
+                300: '#7dd3fc',
+                400: '#38bdf8',
+                500: '#0ea5e9',
+                600: '#0284c7',
+                700: '#0369a1',
+                800: '#075985',
+                900: '#0c4a6e',
+              }
+            },
+            animation: {
+              'fade-in': 'fadeIn 0.5s ease-out',
+              'slide-up': 'slideUp 0.5s ease-out',
+              'slide-down': 'slideDown 0.3s ease-out',
+              'scale-in': 'scaleIn 0.3s ease-out',
+              'shimmer': 'shimmer 2s linear infinite',
+              'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'bounce-slow': 'bounce 2s ease-in-out infinite',
+              'spin-slow': 'spin 3s linear infinite',
+              'float': 'float 3s ease-in-out infinite',
+              'glow': 'glow 2s ease-in-out infinite',
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              slideUp: {
+                '0%': { transform: 'translateY(20px)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' },
+              },
+              slideDown: {
+                '0%': { transform: 'translateY(-20px)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' },
+              },
+              scaleIn: {
+                '0%': { transform: 'scale(0.9)', opacity: '0' },
+                '100%': { transform: 'scale(1)', opacity: '1' },
+              },
+              shimmer: {
+                '0%': { transform: 'translateX(-100%)' },
+                '100%': { transform: 'translateX(100%)' },
+              },
+              float: {
+                '0%, 100%': { transform: 'translateY(0px)' },
+                '50%': { transform: 'translateY(-10px)' },
+              },
+              glow: {
+                '0%, 100%': { boxShadow: '0 0 20px rgba(168, 85, 247, 0.4)' },
+                '50%': { boxShadow: '0 0 40px rgba(168, 85, 247, 0.8), 0 0 60px rgba(236, 72, 153, 0.6)' },
+              }
+            },
+            backdropBlur: {
+              xs: '2px',
+            },
+            boxShadow: {
+              'glow-sm': '0 0 10px rgba(168, 85, 247, 0.5)',
+              'glow-md': '0 0 20px rgba(168, 85, 247, 0.5)',
+              'glow-lg': '0 0 30px rgba(168, 85, 247, 0.5)',
+              'neon': '0 0 5px theme("colors.primary.400"), 0 0 20px theme("colors.primary.700")',
+              'neon-accent': '0 0 5px theme("colors.accent.400"), 0 0 20px theme("colors.accent.700")',
+            }
+          }
+        }
+      }
+    </script>
 
     <!-- Font Awesome for Icons -->
     <link
@@ -19,106 +105,138 @@
   </head>
   <body
     id="body"
-    class="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 text-white transition-all duration-500"
+    class="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white transition-all duration-500 relative overflow-x-hidden"
   >
+    <!-- Animated Background Elements -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+      <div class="absolute top-20 left-10 w-72 h-72 bg-gray-500/10 rounded-full blur-3xl animate-float"></div>
+      <div class="absolute bottom-20 right-10 w-96 h-96 bg-gray-600/10 rounded-full blur-3xl animate-float" style="animation-delay: 1s;"></div>
+      <div class="absolute top-1/2 left-1/2 w-80 h-80 bg-gray-700/10 rounded-full blur-3xl animate-pulse-slow"></div>
+    </div>
+
+    <!-- Main Content Wrapper -->
+    <div class="relative z-10">
     <!-- Header -->
-    <header class="container mx-auto px-4 py-6">
-      <nav class="flex justify-between items-center">
-        <div class="flex items-center space-x-2">
-          <i class="fas fa-music text-2xl text-purple-400"></i>
-          <h1
-            class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"
-          >
+    <header class="container mx-auto px-4 py-6 animate-slide-down">
+      <nav class="flex justify-between items-center backdrop-blur-sm bg-white/5 rounded-2xl px-6 py-4 border border-white/10 shadow-glow-sm">
+        <div class="flex items-center space-x-3 group">
+          <div class="relative">
+            <i class="fas fa-music text-3xl text-primary-400 animate-bounce-slow"></i>
+            <div class="absolute -inset-1 bg-primary-500/20 rounded-full blur group-hover:bg-primary-500/40 transition-all duration-300"></div>
+          </div>
+          <h1 class="text-3xl font-bold bg-gradient-to-r from-primary-400 via-accent-400 to-primary-400 bg-clip-text text-transparent">
             Ambient Mixer
           </h1>
         </div>
 
-        <!-- Theme Toggle -->
-        <button
-          type="button"
-          onclick=""
-          id="themeToggle"
-          class="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300"
-        >
-          <i class="fas fa-sun text-yellow-300"></i>
-        </button>
+        <div class="flex items-center gap-3">
+          <!-- Info Button -->
+          <button
+            type="button"
+            id="infoButton"
+            class="p-3 rounded-xl bg-white/10 hover:bg-gradient-to-r hover:from-primary-500/30 hover:to-accent-500/30 border border-white/10 hover:border-primary-500/50 transition-all duration-300 hover:scale-110 hover:shadow-glow-sm group"
+            title="About"
+          >
+            <i class="fas fa-info-circle text-lg group-hover:rotate-12 transition-transform duration-300"></i>
+          </button>
+
+          <!-- Theme Toggle -->
+          <button
+            type="button"
+            id="themeToggle"
+            class="p-3 rounded-xl bg-white/10 hover:bg-gradient-to-r hover:from-primary-500/30 hover:to-accent-500/30 border border-white/10 hover:border-accent-500/50 transition-all duration-300 hover:scale-110 hover:shadow-glow-sm group"
+            title="Toggle Theme"
+          >
+            <i class="fas fa-sun text-yellow-300 text-lg group-hover:rotate-180 transition-transform duration-500"></i>
+          </button>
+        </div>
       </nav>
     </header>
 
     <!-- Main Content -->
-    <main class="container mx-auto px-4 py-8">
+    <main class="container mx-auto px-4 py-8 animate-fade-in">
       <!-- Controls Section -->
-      <section class="mb-8">
+      <section class="mb-8 animate-slide-up" style="animation-delay: 0.1s;">
         <div class="flex flex-wrap gap-4 justify-center items-center">
           <!-- Master Volume -->
-          <div
-            class="bg-white/10 backdrop-blur-md rounded-xl p-4 flex items-center space-x-3"
-          >
-            <i class="fas fa-volume-high text-xl"></i>
-            <label for="masterVolume" class="text-sm">Master</label>
+          <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 flex items-center space-x-3 border border-white/10 hover:border-primary-500/50 transition-all duration-300 hover:shadow-glow-sm group">
+            <div class="relative">
+              <i class="fas fa-volume-high text-xl text-primary-400 group-hover:scale-110 transition-transform duration-300"></i>
+              <div class="absolute inset-0 bg-primary-500/20 blur-lg rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+            <label for="masterVolume" class="text-sm font-semibold">Master</label>
             <input
               type="range"
               id="masterVolume"
               min="0"
               max="100"
               value="50"
-              class="w-24 accent-purple-500"
+              class="w-24 accent-primary-500 cursor-pointer"
             />
-            <span id="masterVolumeValue" class="text-sm w-8">50</span>
+            <span id="masterVolumeValue" class="text-sm w-8 font-mono bg-primary-500/20 px-2 py-1 rounded">50</span>
           </div>
 
           <!-- Timer -->
-          <div
-            class="bg-white/10 backdrop-blur-md rounded-xl p-4 flex items-center space-x-3"
-          >
-            <i class="fas fa-clock text-xl"></i>
+          <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 flex items-center space-x-3 border border-white/10 hover:border-accent-500/50 transition-all duration-300 hover:shadow-glow-sm group">
+            <div class="relative">
+              <i class="fas fa-clock text-xl text-accent-400 group-hover:scale-110 transition-transform duration-300"></i>
+              <div class="absolute inset-0 bg-accent-500/20 blur-lg rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
             <select
               id="timerSelect"
-              class="bg-transparent border border-white/30 rounded-lg px-3 py-1 text-sm"
+              class="bg-white/10 border border-white/30 hover:border-white/50 rounded-lg px-3 py-2 text-sm font-semibold cursor-pointer focus:outline-none focus:ring-2 focus:ring-accent-500/50 transition-all duration-300"
             >
-              <option value="0">No Timer</option>
-              <option value="5">5 min</option>
-              <option value="15">15 min</option>
-              <option value="30">30 min</option>
-              <option value="60">60 min</option>
+              <option value="0" class="bg-gray-800">No Timer</option>
+              <option value="5" class="bg-gray-800">5 min</option>
+              <option value="15" class="bg-gray-800">15 min</option>
+              <option value="30" class="bg-gray-800">30 min</option>
+              <option value="60" class="bg-gray-800">60 min</option>
+              <option value="custom" class="bg-gray-800">Custom...</option>
             </select>
-            <span id="timerDisplay" class="text-sm hidden"></span>
+            <span id="timerDisplay" class="text-sm hidden font-mono bg-accent-500/20 px-3 py-1 rounded animate-pulse-slow"></span>
           </div>
 
           <!-- Play/Pause All -->
           <button
             type="button"
             id="playPauseAll"
-            class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105"
+            class="relative bg-gradient-to-r from-primary-500 via-accent-500 to-primary-500 hover:from-primary-600 hover:via-accent-600 hover:to-primary-600 px-8 py-3 rounded-xl font-bold transition-all duration-300 transform hover:scale-105 hover:shadow-glow-lg border border-white/20 group overflow-hidden"
           >
-            <i class="fas fa-play mr-2"></i>
-            <span>Play All</span>
+            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+            <div class="relative flex items-center">
+              <i class="fas fa-play mr-2 group-hover:scale-110 transition-transform duration-300"></i>
+              <span>Play All</span>
+            </div>
           </button>
 
           <!-- Reset -->
           <button
             type="button"
             id="resetAll"
-            class="bg-white/10 hover:bg-white/20 px-6 py-3 rounded-xl font-semibold transition-all duration-300"
+            class="bg-white/10 hover:bg-gradient-to-r hover:from-primary-500/30 hover:to-accent-500/30 px-6 py-3 rounded-xl font-semibold transition-all duration-300 border border-white/10 hover:border-primary-500/40 hover:shadow-glow-sm transform hover:scale-105 group"
           >
-            <i class="fas fa-undo mr-2"></i>
-            Reset
+            <i class="fas fa-undo mr-2 group-hover:rotate-180 transition-transform duration-500"></i>
+            <span>Reset</span>
           </button>
         </div>
       </section>
 
       <!-- Sound Cards Grid -->
       <section
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8 animate-slide-up"
+        style="animation-delay: 0.2s;"
       >
         <!-- Sound cards will be dynamically generated here -->
       </section>
 
       <!-- Presets Section -->
-      <section class="bg-white/10 backdrop-blur-md rounded-2xl p-6">
-        <h2 class="text-xl font-bold mb-4 flex items-center">
-          <i class="fas fa-bookmark mr-2 text-purple-400"></i>
-          Presets
+      <section class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/10 hover:border-primary-500/30 transition-all duration-500 hover:shadow-glow-md animate-slide-up" style="animation-delay: 0.3s;">
+        <h2 class="text-2xl font-bold mb-6 flex items-center group">
+          <div class="relative mr-3">
+            <i class="fas fa-bookmark text-primary-400 text-2xl group-hover:scale-110 transition-transform duration-300"></i>
+            <div class="absolute inset-0 bg-primary-500/30 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </div>
+          <span class="bg-gradient-to-r from-primary-400 to-accent-400 bg-clip-text text-transparent">Presets</span>
         </h2>
 
         <div class="flex flex-wrap gap-3 mb-4">
@@ -127,24 +245,24 @@
             <!-- Default presets -->
             <button
               type="button"
-              class="preset-btn bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg transition-all duration-300"
+              class="preset-btn bg-white/10 hover:bg-gradient-to-r hover:from-primary-500/40 hover:to-accent-500/40 px-5 py-2.5 rounded-lg transition-all duration-300 border border-white/10 hover:border-primary-500/50 font-semibold transform hover:scale-105 hover:shadow-glow-sm group"
               data-preset="focus"
             >
-              <i class="fas fa-brain mr-2"></i>Focus
+              <i class="fas fa-brain mr-2 text-primary-400 group-hover:scale-110 transition-transform duration-300"></i>Focus
             </button>
             <button
               type="button"
-              class="preset-btn bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg transition-all duration-300"
+              class="preset-btn bg-white/10 hover:bg-gradient-to-r hover:from-primary-500/40 hover:to-accent-500/40 px-5 py-2.5 rounded-lg transition-all duration-300 border border-white/10 hover:border-primary-500/50 font-semibold transform hover:scale-105 hover:shadow-glow-sm group"
               data-preset="relax"
             >
-              <i class="fas fa-spa mr-2"></i>Relax
+              <i class="fas fa-spa mr-2 text-accent-400 group-hover:scale-110 transition-transform duration-300"></i>Relax
             </button>
             <button
               type="button"
-              class="preset-btn bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg transition-all duration-300"
+              class="preset-btn bg-white/10 hover:bg-gradient-to-r hover:from-primary-500/40 hover:to-accent-500/40 px-5 py-2.5 rounded-lg transition-all duration-300 border border-white/10 hover:border-primary-500/50 font-semibold transform hover:scale-105 hover:shadow-glow-sm group"
               data-preset="sleep"
             >
-              <i class="fas fa-bed mr-2"></i>Sleep
+              <i class="fas fa-bed mr-2 text-blue-400 group-hover:scale-110 transition-transform duration-300"></i>Sleep
             </button>
           </div>
 
@@ -152,9 +270,13 @@
           <button
             type="button"
             id="savePreset"
-            class="bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 px-4 py-2 rounded-lg transition-all duration-300"
+            class="bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 px-5 py-2.5 rounded-lg transition-all duration-300 border border-green-400/30 hover:border-green-400/60 font-semibold transform hover:scale-105 hover:shadow-glow-sm group overflow-hidden relative"
           >
-            <i class="fas fa-save mr-2"></i>Save Mix
+            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+            <div class="relative flex items-center">
+              <i class="fas fa-save mr-2 group-hover:scale-110 transition-transform duration-300"></i>
+              <span>Save Mix</span>
+            </div>
           </button>
         </div>
 
@@ -168,36 +290,196 @@
     <!-- Save Preset Modal -->
     <div
       id="savePresetModal"
-      class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-50"
+      class="fixed inset-0 bg-black/70 backdrop-blur-md hidden items-center justify-center z-50 animate-fade-in"
     >
-      <div
-        class="bg-gradient-to-br from-purple-900 to-indigo-900 p-6 rounded-2xl max-w-md w-full mx-4 border border-white/20"
-      >
-        <h3 class="text-xl font-bold mb-4">Save Your Mix</h3>
-        <input
-          type="text"
-          id="presetName"
-          placeholder="Enter preset name..."
-          class="w-full px-4 py-2 bg-white/10 border border-white/30 rounded-lg mb-4 placeholder-white/50"
-        />
+      <div class="bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 p-8 rounded-3xl max-w-md w-full mx-4 border-2 border-primary-500/30 shadow-2xl shadow-primary-500/20 animate-scale-in">
+        <div class="text-center mb-6">
+          <div class="inline-block p-4 bg-gradient-to-br from-primary-500/20 to-accent-500/20 rounded-2xl mb-4 animate-pulse-slow">
+            <i class="fas fa-save text-4xl text-primary-400"></i>
+          </div>
+          <h3 class="text-2xl font-bold bg-gradient-to-r from-primary-400 to-accent-400 bg-clip-text text-transparent">Save Your Mix</h3>
+          <p class="text-white/60 text-sm mt-2">Create a custom preset for later</p>
+        </div>
+        
+        <div class="relative mb-6 group">
+          <i class="fas fa-tag absolute left-4 top-1/2 -translate-y-1/2 text-primary-400 group-focus-within:scale-110 transition-transform duration-300"></i>
+          <input
+            type="text"
+            id="presetName"
+            placeholder="Enter preset name..."
+            class="w-full pl-12 pr-4 py-3 bg-white/10 border-2 border-white/20 focus:border-primary-500/50 rounded-xl placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-primary-500/30 transition-all duration-300 font-semibold"
+          />
+        </div>
+        
         <div class="flex gap-3">
           <button
             type="button"
             id="confirmSave"
-            class="flex-1 bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 px-4 py-2 rounded-lg transition-all duration-300"
+            class="flex-1 bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 px-6 py-3 rounded-xl font-bold transition-all duration-300 transform hover:scale-105 hover:shadow-glow-md border border-green-400/30 group relative overflow-hidden"
           >
-            Save
+            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+            <span class="relative flex items-center justify-center">
+              <i class="fas fa-check mr-2"></i>
+              Save
+            </span>
           </button>
           <button
             type="button"
             id="cancelSave"
-            class="flex-1 bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg transition-all duration-300"
+            class="flex-1 bg-white/10 hover:bg-white/20 px-6 py-3 rounded-xl font-bold transition-all duration-300 border border-white/20 hover:border-white/40 transform hover:scale-105 group"
           >
+            <i class="fas fa-times mr-2 group-hover:rotate-90 transition-transform duration-300"></i>
             Cancel
           </button>
         </div>
       </div>
     </div>
+
+    <!-- Info Modal -->
+    <div
+      id="infoModal"
+      class="fixed inset-0 bg-black/70 backdrop-blur-md hidden items-center justify-center z-50 animate-fade-in"
+    >
+      <div class="bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 p-8 rounded-3xl max-w-lg w-full mx-4 border-2 border-primary-500/30 shadow-2xl shadow-primary-500/20 animate-scale-in max-h-[90vh] overflow-y-auto">
+        <div class="text-center mb-6">
+          <div class="inline-block p-4 bg-gradient-to-br from-primary-500/20 to-accent-500/20 rounded-2xl mb-4">
+            <i class="fas fa-info-circle text-4xl text-primary-400"></i>
+          </div>
+          <h3 class="text-2xl font-bold bg-gradient-to-r from-primary-400 to-accent-400 bg-clip-text text-transparent">About Ambient Mixer</h3>
+        </div>
+        
+        <div class="space-y-4 text-white/80 mb-6">
+          <p class="leading-relaxed">
+            <strong class="text-white">Create your perfect atmosphere</strong> by mixing ambient sounds. Ideal for focus, relaxation, sleep, or meditation.
+          </p>
+          
+          <div class="bg-white/10 rounded-xl p-4 border border-white/10">
+            <h4 class="font-bold text-white mb-2 flex items-center">
+              <i class="fas fa-lightbulb text-yellow-400 mr-2"></i>
+              How to Use
+            </h4>
+            <ul class="space-y-2 text-sm">
+              <li class="flex items-start">
+                <i class="fas fa-check text-green-400 mr-2 mt-1"></i>
+                <span>Click sound cards to play/pause individual sounds</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check text-green-400 mr-2 mt-1"></i>
+                <span>Adjust volume sliders to create your perfect mix</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check text-green-400 mr-2 mt-1"></i>
+                <span>Use presets for quick atmosphere changes</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check text-green-400 mr-2 mt-1"></i>
+                <span>Save your custom mixes for later</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check text-green-400 mr-2 mt-1"></i>
+                <span>Set a timer for automatic fade out</span>
+              </li>
+            </ul>
+          </div>
+          
+          <p class="text-sm text-white/60 text-center italic">
+            <i class="fas fa-heart text-red-400 mr-1"></i>
+            Perfect for studying, working, sleeping, or meditation
+          </p>
+        </div>
+        
+        <button
+          type="button"
+          id="closeInfo"
+          class="w-full bg-gradient-to-r from-primary-500 to-accent-500 hover:from-primary-600 hover:to-accent-600 px-6 py-3 rounded-xl font-bold transition-all duration-300 transform hover:scale-105 hover:shadow-glow-md border border-primary-400/30 group relative overflow-hidden"
+        >
+          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+          <span class="relative">Got it!</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Custom Timer Modal -->
+    <div
+      id="customTimerModal"
+      class="fixed inset-0 bg-black/70 backdrop-blur-md hidden items-center justify-center z-50 animate-fade-in"
+    >
+      <div class="bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 p-8 rounded-3xl max-w-md w-full mx-4 border-2 border-accent-500/30 shadow-2xl shadow-accent-500/20 animate-scale-in">
+        <div class="text-center mb-6">
+          <div class="inline-block p-4 bg-gradient-to-br from-accent-500/20 to-primary-500/20 rounded-2xl mb-4 animate-pulse-slow">
+            <i class="fas fa-clock text-4xl text-accent-400"></i>
+          </div>
+          <h3 class="text-2xl font-bold bg-gradient-to-r from-accent-400 to-primary-400 bg-clip-text text-transparent">Set Custom Timer</h3>
+          <p class="text-white/60 text-sm mt-2">Enter minutes for auto-stop</p>
+        </div>
+        
+        <div class="relative mb-6 group">
+          <i class="fas fa-hourglass-half absolute left-4 top-1/2 -translate-y-1/2 text-accent-400 group-focus-within:scale-110 transition-transform duration-300"></i>
+          <input
+            type="number"
+            id="customTimerInput"
+            placeholder="Enter minutes (1-999)"
+            min="1"
+            max="999"
+            class="w-full pl-12 pr-4 py-3 bg-white/10 border-2 border-white/20 focus:border-accent-500/50 rounded-xl placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-accent-500/30 transition-all duration-300 font-semibold text-center"
+          />
+        </div>
+        
+        <div class="flex gap-3">
+          <button
+            type="button"
+            id="confirmCustomTimer"
+            class="flex-1 bg-gradient-to-r from-accent-500 to-primary-500 hover:from-accent-600 hover:to-primary-600 px-6 py-3 rounded-xl font-bold transition-all duration-300 transform hover:scale-105 hover:shadow-glow-md border border-accent-400/30 group relative overflow-hidden"
+          >
+            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+            <span class="relative flex items-center justify-center">
+              <i class="fas fa-check mr-2"></i>
+              Set Timer
+            </span>
+          </button>
+          <button
+            type="button"
+            id="cancelCustomTimer"
+            class="flex-1 bg-white/10 hover:bg-white/20 px-6 py-3 rounded-xl font-bold transition-all duration-300 border border-white/20 hover:border-white/40 transform hover:scale-105 group"
+          >
+            <i class="fas fa-times mr-2 group-hover:rotate-90 transition-transform duration-300"></i>
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timer End Notification Modal -->
+    <div
+      id="timerEndModal"
+      class="fixed inset-0 bg-black/70 backdrop-blur-md hidden items-center justify-center z-50 animate-fade-in"
+    >
+      <div class="bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 p-8 rounded-3xl max-w-md w-full mx-4 border-2 border-accent-500/50 shadow-2xl shadow-accent-500/30 animate-scale-in">
+        <div class="text-center mb-6">
+          <div class="inline-block p-4 bg-gradient-to-br from-accent-500/30 to-primary-500/30 rounded-2xl mb-4 animate-bounce-slow">
+            <i class="fas fa-bell text-5xl text-accent-400"></i>
+          </div>
+          <h3 class="text-3xl font-bold bg-gradient-to-r from-accent-400 to-primary-400 bg-clip-text text-transparent mb-4">Timer Ended!</h3>
+          <p class="text-white/80 text-lg mb-2">All sounds have been stopped.</p>
+          <p class="text-white/60 text-sm">Your ambient session is complete.</p>
+        </div>
+        
+        <button
+          type="button"
+          id="closeTimerEnd"
+          class="w-full bg-gradient-to-r from-accent-500 to-primary-500 hover:from-accent-600 hover:to-primary-600 px-6 py-3 rounded-xl font-bold transition-all duration-300 transform hover:scale-105 hover:shadow-glow-md border border-accent-400/30 group relative overflow-hidden"
+        >
+          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+          <span class="relative flex items-center justify-center">
+            <i class="fas fa-check mr-2"></i>
+            Got it!
+          </span>
+        </button>
+      </div>
+    </div>
+
+    </div>
+    <!-- End Main Content Wrapper -->
 
     <script src="./js/app.js" type="module"></script>
   </body>
