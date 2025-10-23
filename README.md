@@ -1,9 +1,6 @@
 # 🎧 Ambient Mixer
 
 A modern and relaxing web app that lets users mix different ambient sounds — such as rain, ocean waves, forest, and fireplace — to create their own calming atmosphere. Perfect for focus, relaxation, or sleep.
-
-![Ambient Mixer Preview](./image.png)
-
 ---
 
 ## 🌟 Features
